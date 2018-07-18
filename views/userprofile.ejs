@@ -1,0 +1,138 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                          <% include ../views/layouts/messages %>
+
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+        User Profile
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+            <div class="form-group">
+                <div class="col-lg-6">
+                    <img src="/img/users/<%= currentUser.preview %>">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label for="username" class="control-label col-lg-4">Usernane:</label>
+                <div class="col-lg-8">
+                    <input type="text" id="username" name="username" class="form-control" value="<%= currentUser.username %>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="createdDay" class="control-label col-lg-4">Joined:</label>
+                <div class="col-lg-8">
+                    <input type="text" id="createdDay" name="createdDay" class="form-control" value="<%= currentUser.created.date %> - <%= currentUser.created.time %>" disabled>
+                </div>
+    	      </div>
+            <div class="form-group">
+                    <label for="userFirstName" class="control-label col-lg-4">First Name:</label>
+                    <div class="col-lg-8">
+                        <div class="col-lg-9">
+                            <input type="text" id="userFirstName" name="userFirstName" class="form-control" value="<%= currentUser.name.first %>">
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <label for="userLastName" class="control-label col-lg-4">Last Name:</label>
+                    <div class="col-lg-8">
+                        <div class="col-lg-9">
+                            <input type="text" id="userLastName" name="userLastName" class="form-control" value="<%= currentUser.name.last %>">
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <label for="userEmail" class="control-label col-lg-4">Email:</label>
+                    <div class="col-lg-8">
+                        <div class="col-lg-9">
+                            <input type="text" id="userEmail" name="userEmail" class="form-control" value="<%= currentUser.email %>">
+                        </div>
+                    </div>
+            </div>
+
+
+        </div>
+
+
+    <div class="col-lg-8">
+          <div class="row">
+              <p class="col-lg-12">You have <%= projectsOwned %> project(s)! <a href="/projects/add" class="btn btn-primary">Add Project</a></p>
+                  <% for (var i=0; i < projects.length; i++) { %>
+                      <% if (projects[i].owner.username == currentUser.username) { %>
+                      <div class="col-lg-3">
+                          <div class="box">
+                              <div class="body">
+                                  <strong><%= projects[i].name %></strong>
+                      	    </div>
+                              <div class="body">
+                                  <%= projects[i].description %>
+                              </div>
+                              <div class="body">
+                                  Created: <%= projects[i].created.date %> <%= projects[i].created.time %>
+                              </div>
+                              <div class="body text-right">
+                                  <a href="/projects/view/<%= projects[i]._id %>" class="btn btn-success">Open</a>
+                                  <a href="/projects/edit/<%= projects[i]._id %>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                  <a href="/projects/view/<%= projects[i]._id %>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                      	    </div>
+                      	</div>
+                      </div>
+                  <% } %>
+              <% } %>
+            </div>
+
+      <hr>
+
+          <div class="row">
+              <div class="col-lg-12">
+                  <p class="col-lg-12">You have <%= projectsShared %> shared project(s)!</p>
+                      <% for (var i=0; i < projects.length; i++) { %>
+                      <% if (projects[i].owner.username != currentUser.username) { %>
+                          <div class="col-lg-3">
+                              <div class="box">
+                                  <div class="body">
+                                      <strong><%= projects[i].name %></strong>
+                                  </div>
+                                  <div class="body">
+                                      <%= projects[i].description %>
+                                  </div>
+                                  <div class="body">
+                                      Created: <%= projects[i].created.date %> <%= projects[i].created.time %>
+                                  </div>
+                                  <div class="body text-right">
+                                      <a href="/projects/view/<%= projects[i]._id %>" class="btn btn-success">Open</a>
+                                      <a href="/projects/edit/<%= projects[i]._id %>" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                      <a href="/projects/view/<%= projects[i]._id %>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                      <% } %>
+                  <% } %>
+                  </div>
+              </div>
+          </div>
+
+    </div>
+
+<br>
+<hr>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

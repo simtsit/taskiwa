@@ -1,0 +1,69 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer col-lg-12">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+                            <div class="text-center">
+                                <h2>Tasks</h2>
+                            </div>
+                            <br>
+                            <% if (projects.length == 0) { %>
+                                <p> There are no Projects related to you! </p>
+                            <% } else { %>
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Project</th>
+                                        <th>Title</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>loc.x</th>
+                                        <th>loc.y</th>
+                                        <th>Task Type</th>
+                                        <th>Color</th>
+                                        <th>created.date</th>
+                                        <th>created.time</th>
+                                        <th>Owner</th>
+                                        <th colspan="3"></th>
+                                    </tr>
+                                    <% for (var i=0; i< projects.length; i++) { %>
+                                        <% for (var j=0; j< projects[i].tasks.length; j++) { %>
+                                            <% var count=0; %>
+                                            <tr>
+                                                <td><%= ++count %></td>
+                                                <td><%= projects[i].name %></td>
+                                                <td><%= projects[i].tasks[j].title %></td>
+                                                <td><%= projects[i].tasks[j].priority %></td>
+                                                <td><%= projects[i].tasks[j].status %></td>
+                                                <td><%= projects[i].tasks[j].loc.x %></td>
+                                                <td><%= projects[i].tasks[j].loc.y %></td>
+                                                <td><%= projects[i].tasks[j].type.name %></td>
+                                                <td><%= projects[i].tasks[j].type.color %></td>
+                                                <td><%= projects[i].tasks[j].created.date %></td>
+                                                <td><%= projects[i].tasks[j].created.time %></td>
+                                                <td><%= projects[i].tasks[j].owner %></td>
+                                                <td><a href="/tasks/view/<%= projects[i]._id %>/<%= projects[i].tasks[j]._id %>" class="btn btn-success btn-sm">Open</a></td>
+                                                <td><a href="/tasks/edittask/<%= projects[i]._id %>/<%= projects[i].tasks[j]._id %>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a></td>
+                                                <td><form method="post" action="/tasks/moveTaskToTrash/<%= projects[i]._id %>/<%= projects[i].tasks[j]._id %>"><button type="submit" href="#" class="btn btn-danger btn-sm">Delete</button></form></td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>
+                                </table>
+                                <% } %>
+
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+
+                      </div>
+                    </div>
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

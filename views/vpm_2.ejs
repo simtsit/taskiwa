@@ -1,0 +1,67 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer col-lg-12">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+                            <div class="text-center">
+                                <h2>Project View - Mettis (minimal)</h2> <a href="/tasks/addtask/<%= project.id %>" class="btn btn-primary">Add Task</a>
+                            </div>
+                            <br>
+                            <% if (tasks.length == 0) { %>
+                                <p> There are no Tasks! Create one! </p>
+                            <% } else { %>
+                            <table class="table table-striped table-hover">
+                                <tr>
+                                    <th>#</th>
+                                    <th>ID</th>
+                                    <th>title</th>
+                                    <th>priority</th>
+                                    <th>status</th>
+                                    <th>loc.x</th>
+                                    <th>loc.y</th>
+                                    <th>task type</th>
+                                    <th>color</th>
+                                    <th>created.date</th>
+                                    <th>created.time</th>
+                                    <th>creator</th>
+                                    <th colspan="3"></th>
+                                </tr>
+                                <% var count=0; %>
+                                <% for ( var i=0; i < tasks.length; i++) { %>
+                                    <% if (tasks[i].status == "open") { %>
+                                        <tr>
+                                            <td><%= ++count %></td>
+                                            <td><%= tasks[i]._id %></td>
+                                            <td><%= tasks[i].title %></td>
+                                            <td><%= tasks[i].priority %></td>
+                                            <td><%= tasks[i].status %></td>
+                                            <td><%= tasks[i].loc.x %></td>
+                                            <td><%= tasks[i].loc.y %></td>
+                                            <td><%= tasks[i].type %></td>
+                                            <td><%= tasks[i].color %></td>
+                                            <td><%= tasks[i].created.date %></td>
+                                            <td><%= tasks[i].created.time %></td>
+                                            <td><%= tasks[i].creator %></td>
+                                            <td><a href="/tasks/view/<%= tasks[i]._id %>" class="btn btn-success btn-sm">View</a></td>
+                                            <td><a href="/tasks/edittask/<%= project._id %>/<%= tasks[i]._id %>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a></td>
+                                            <td><form method="post" action="/tasks/moveTaskToTrash/<%= project._id %>/<%= tasks[i]._id %>"><button type="submit" href="/projects/view/<%= project._id %>" class="btn btn-danger btn-sm">Delete</button></form></td>
+                                        </tr>
+                                    <% } %>
+                                <% } %>
+                            </table>
+                            <% } %>
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+
+                      </div>
+                    </div>
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

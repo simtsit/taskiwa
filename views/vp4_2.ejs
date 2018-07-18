@@ -1,0 +1,212 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer col-lg-10">
+                        <div class="inner bg-light lter">
+                            <div class="text-center">
+                            </div>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.6.7/go-debug.js"></script>
+                            <script src="/gojs/js/dataInspector.js"></script>
+                            <script id="code">
+
+  function init() {
+    // if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+
+    var $ = go.GraphObject.make;  // for conciseness in defining templates
+
+    myDiagram = $(go.Diagram, "myDiagramDiv",  // create a Diagram for the DIV HTML element
+                  {
+                    initialContentAlignment: go.Spot.Center,  // center the content
+                    // initialAutoScale: go.Diagram.Uniform,
+                    // layout: $(go.LayeredDigraphLayout, { isInitial: false, isOngoing: false, layerSpacing: 50 }),
+                    "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+                    // "undoManager.isEnabled": true  // enable undo & redo
+                  });
+
+
+
+                  // this is shown by the mouseHover event handler
+                     var nodeHoverAdornment =
+                       $(go.Adornment, "Spot",
+                         {
+                           background: "transparent",
+                           // hide the Adornment when the mouse leaves it
+                           mouseLeave: function(e, obj) {
+                             var ad = obj.part;
+                             ad.adornedPart.removeAdornment("mouseHover");
+                           }
+                         },
+                         $(go.Placeholder,
+                           {
+                             background: "transparent",  // to allow this Placeholder to be "seen" by mouse events
+                             isActionable: true,  // needed because this is in a temporary Layer
+                             click: function(e, obj) {
+                               var node = obj.part.adornedPart;
+                               node.diagram.select(node);
+                             }
+                           }),
+                         $("Button",
+                           { alignment: go.Spot.Right, alignmentFocus: go.Spot.Left },
+                           $(go.TextBlock, "This is a task!"))
+                       );
+
+
+        //  colorTest = $(go.Brush, "Linear", { 0: "#e0d4c0", 0.5: "#e0d4c5", 1: "#e0d4cf" });
+
+
+
+    // define a simple Node template
+    myDiagram.nodeTemplate =
+      $(go.Node, "Auto",  // the Shape will go around the TextBlock
+        // temporarily put selected nodes in Foreground layer
+        new go.Binding("layerName", "isSelected", function(s) { return s ? "Foreground" : ""; }).ofObject(),
+           new go.Binding("location", "loc").makeTwoWay(),
+           $(go.Shape, "RoundedRectangle",
+             { stroke: "#0079A6",
+               portId: "",
+               cursor: "pointer",  // the node's only port is the Shape
+               fromLinkable: true,
+               fromLinkableDuplicates: false,
+               fromLinkableSelfNode: false,
+               toLinkable: true,
+               toLinkableDuplicates: false,
+               toLinkableSelfNode: false
+           },
+       new go.Binding("fill", "color")),
+      $(go.Panel, "Horizontal",
+        $(go.TextBlock, "In", { background: "lightgreen", alignment: new go.Spot(0, 0.2) }),
+        $(go.Panel, "Vertical",
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "key")),
+          $(go.TextBlock, { margin: 2 }, new go.Binding("text", "title")),
+          $(go.TextBlock, { margin: 2 }, new go.Binding("text", "type")),
+          $(go.TextBlock, { margin: 2 }, new go.Binding("text", "priority")),
+          $(go.TextBlock, { margin: 2 }, new go.Binding("text", "description")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "status")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "locx")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "locy")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "users")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "createddate")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "createdhour")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "loc")),
+        //   $(go.TextBlock, { margin: 2 }, new go.Binding("text", "Owner")),
+          { // show the Adornment when a mouseHover event occurs
+            mouseHover: function(e, obj) {
+              var node = obj.part;
+              nodeHoverAdornment.adornedObject = node;
+              node.addAdornment("mouseHover", nodeHoverAdornment);
+            }
+          }
+        ),
+        // $(go.TextBlock, "right", { background: "lightgreen", alignment: new go.Spot(1, 0.2) })
+        $(go.TextBlock, "Out", { background: "lightgreen", alignment: new go.Spot(1, 0.2) })
+      )
+    );
+
+    // but use the default Link template, by not setting Diagram.linkTemplate
+
+    // create the model data that will be represented by Nodes and Links
+    myDiagram.model = new go.GraphLinksModel(
+    [
+      <% for (var taskCounter=0; taskCounter < project.tasks.length; taskCounter++) { %>
+        {
+          key: "<%= project.tasks[taskCounter]._id %>",
+          title: "<%= project.tasks[taskCounter].title %>",
+          priority: "<%= project.tasks[taskCounter].priority %>",
+          duration: "<%= project.tasks[taskCounter].duration %>",
+          description: "<%= project.tasks[taskCounter].description %>",
+          type: "<%= project.tasks[taskCounter].type.name %>",
+          status: "<%= project.tasks[taskCounter].status %>",
+          locx: "<%= project.tasks[taskCounter].loc.x %>",
+          locy: "<%= project.tasks[taskCounter].loc.y %>",
+          createddate: "<%= project.tasks[taskCounter].created.date %>",
+          createdhour: "<%= project.tasks[taskCounter].created.time %>",
+          owner: "<%= project.tasks[taskCounter].owner.username %>",
+          color: "<%= project.tasks[taskCounter].type.color %>",
+        },
+      <% } %>
+    ],
+    [
+      <% for (var taskCounter=0; taskCounter < project.tasks.length; taskCounter++) { %>
+          <% if (project.tasks[taskCounter].connections.length > 0) { %>
+              <% for (var taskConnectionCounter=0; taskConnectionCounter <project.tasks[taskCounter].connections.length; taskConnectionCounter++) { %>
+                  {
+                      from: "<%= project.tasks[taskCounter]._id %>", to: "<%= project.tasks[taskCounter].connections[taskConnectionCounter].to %>"
+                  },
+              <% } %>
+           <% } %>
+      <% } %>
+    ]);
+
+    // select a Node, so that the first Inspector shows something
+    myDiagram.select(myDiagram.nodes.first());
+
+    // Show the primary selection's data, or blanks if no Part is selected:
+    var inspector = new Inspector('myInspectorDiv', myDiagram,
+    {
+      // uncomment this line to only inspect the named properties below instead of all properties on each object:
+      includesOwnProperties: false,
+      properties: {
+        // key would be automatically added for nodes, but we want to declare it read-only also:
+        "key": { readOnly: true, show: Inspector.showIfPresent },
+        "title": {},
+        // color would be automatically added for nodes, but we want to declare it a color also:
+        "color": { show: Inspector.showIfPresent, type: 'color' },
+        "priority": { show: Inspector.showIfNode, type: 'boolean', defaultValue: true  },
+        "type": { show: Inspector.showIfPresent },
+        "status": { show: Inspector.showIfPresent },
+        "locx": { show: Inspector.showIfPresent },
+        "locy": { show: Inspector.showIfPresent },
+        "users": { show: Inspector.showIfPresent },
+        "createddate": { show: Inspector.showIfPresent },
+        "createdhour": { show: Inspector.showIfPresent },
+        "owner": { show: Inspector.showIfPresent },
+        "loc": { show: Inspector.showIfPresent },
+      }
+    });
+
+
+        // Test Area
+
+
+
+
+
+
+  } // end of script
+
+
+
+    </script>
+                           </head>
+                             <body onload="init()">
+                              <div id="sample">
+                                  <div id="myDiagramDiv" style="border: solid 1px black; height: 780px;"></div>
+                                </div>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                    <div class="col-lg-2">
+                      <div>
+                        <span style="display: inline-block; vertical-align: top;">
+                            <div id="myInspectorDiv" class="inspector"> </div>
+                            <br>
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                            <a href="/tasks/addtask/<%= project.id %>" class="btn btn-primary">Add Task</a>
+                        </span>
+                        <input id="SelectAll" type="button" onclick="myDiagram.commandHandler.selectAll()" value="Save" />
+                        <input id="" type="submit" href="/dashboard" onclick="parent.location='/tasks/view/'" value="Edit" />
+                        <input id="SelectAll" type="button" onclick="myDiagram.commandHandler.selectAll()" value="Select All" />
+                      </div>
+                    </div>
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

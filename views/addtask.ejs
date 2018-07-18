@@ -1,0 +1,86 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+	<div class="box">
+	    <header>
+		<h5>New Project</h5>
+	    </header>
+        <form class="form-horizontal" method="post" action="/tasks/addtask/<%= project._id %>">
+
+          <div class="form-group">
+              <label for="taskTitle" class="control-label col-lg-4">Title</label>
+
+              <div class="col-lg-8">
+                  <input id="taskTitle" name="taskTitle" class="form-control"></input>
+              </div>
+          </div>
+          <!-- /.form-group -->
+
+            <div class="form-group">
+                <label for="taskPriority" class="control-label col-lg-4">Priority</label>
+
+                <div class="col-lg-2">
+                    <select id="taskPriority" name="taskPriority" class="form-control">
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+                <label for="taskType" class="control-label col-lg-4">Type</label>
+
+                <div class="col-lg-3">
+                    <select id="taskType" name="taskType" class="form-control">
+                      <% for (var i=0; i < project.tasktypes.length; i++) { %>}
+                        <option value="<%= project.tasktypes[i]._id %>"><%= project.tasktypes[i].name %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+                <label for="taskDescription" class="control-label col-lg-4">Description</label>
+
+                <div class="col-lg-8">
+                    <textarea id="taskDescription" name="taskDescription" class="form-control"></textarea>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <a href="/projects/view/<%= project.id %>" class="btn btn-primary"> Back</a>
+                    <input class="btn btn-primary" type="submit" value="Create Task">
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+<hr>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

@@ -1,0 +1,155 @@
+        <body class="sidebar-left-mini">
+            <div class="bg-dark dk" id="wrap">
+                <div id="top">
+                    <!-- .navbar -->
+                    <nav class="navbar navbar-inverse navbar-static-top">
+                        <div class="container-fluid">
+
+
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <header class="navbar-header">
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a href="/dashboard" class="navbar-brand"><h2>Taskiwa</h2></a>
+
+                            </header>
+
+                            <div class="topnav">
+                                <div class="usertopnav"style="padding-right: 10px; float: left;">
+                                    <img width=30 src="/img/users/<%= user.preview %>" style="float: left;">
+                                    <p style="float: right; padding-left: 5px; padding-top: 4px;"><%= user.username %>!</p>
+                                </div>
+                                <div class="btn-group">
+                                    <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip"
+                                       class="btn btn-default btn-sm" id="toggleFullScreen">
+                                        <i class="glyphicon glyphicon-fullscreen"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a data-toggle="modal" data-original-title="Help" data-placement="bottom"
+                                       class="btn btn-default btn-sm"
+                                       href="#helpModal">
+                                        <i class="fa fa-question"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a href="/users/logout" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom"
+                                       class="btn btn-metis-1 btn-sm">
+                                        <i class="fa fa-power-off"></i>
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip"
+                                       class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                                        <i class="fa fa-bars"></i>
+                                    </a>
+                                    <a data-placement="bottom" data-original-title="Show / Hide Right" data-toggle="tooltip"
+                                       class="btn btn-default btn-sm toggle-right">
+                                        <span class="glyphicon glyphicon-comment"></span>
+                                    </a>
+                                </div>
+
+                            </div>
+
+
+                            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            </div>
+                        </div>
+                        <!-- /.container-fluid -->
+                    </nav>
+                    <!-- /.navbar -->
+                    <header class="head">
+                        <div class="search-bar">
+
+                        </div>
+                                <!-- /.search-bar -->
+                            <div class="main-bar">
+                                <h3>
+              <i class="fa fa-dashboard"></i>&nbsp;
+            <%= title %>
+          </h3>
+                            </div>
+                            <!-- /.main-bar -->
+                        </header>
+                        <!-- /.head -->
+                      </div>
+                      <!-- /#top -->
+                          <div id="left">
+                              <!-- #menu -->
+                              <ul id="menu" class="bg-blue dker">
+                                        <li class="nav-header">Menu</li>
+                                        <!-- <li class="nav-divider"></li> -->
+                                        <li class="">
+                                            <a href="/dashboard">
+                                                <i class="fa fa-home"></i><span class="link-title">Dashboard</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/users/view/<%= user.username %>">
+                                                <i class="fa fa-user"></i><span class="link-title">User Profile</span>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/projects">
+                                            <i class="fa fa-dashboard"></i><span class="link-title">Projects</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/tasks">
+                                            <i class="fa fa-tasks"></i><span class="link-title">Tasks</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/reports">
+                                            <i class="fa fa-list-alt"></i><span class="link-title">Reports</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/history">
+                                            <i class="fa fa-gamepad"></i><span class="link-title">History</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/usergroups">
+                                            <i class="fa fa-group"></i><span class="link-title">Connections</span>
+                                          </a>
+                                        </li>
+                                        <li class="nav-divider"></li>
+                                        <li class="">
+                                          <a href="/trash">
+                                            <i class="fa fa-trash-o"></i><span class="link-title">Trash Bin</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/settings">
+                                            <i class="fa fa-code"></i><span class="link-title">Settings</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/settings">
+                                            <i class="fa fa-code-fork"></i><span class="link-title">Settings</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/settings">
+                                            <i class="fa fa-folder-open"></i><span class="link-title">Settings</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/settings">
+                                            <i class="fa fa-comment-o"></i><span class="link-title">Settings</span>
+                                          </a>
+                                        </li>
+                                        <li class="">
+                                          <a href="/users/myprofile">
+                                            <i class="fa fa-gears"></i><span class="link-title">Settings</span>
+                                          </a>
+                                        </li>
+                                        <li class="nav-divider"></li>
+                                      </ul>
+                              <!-- /#menu -->

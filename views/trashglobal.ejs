@@ -1,0 +1,82 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer col-lg-12">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+
+                            <div class="text-center">
+                                <h2>Trash Bin (Global)</h2>
+                            </div>
+                            <br>
+                            <% if (trashProjects == 0) {  %>
+                                <p>The Trash Bin is empty</p>
+                                <% } else { %>
+                            <h3>Deleted Projects</h3>
+                            <table class="table table-striped table-hover">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <% var count=0; %>
+                                    <% for ( var i=0; i< trashProjects.length; i++) { %>
+                                            <tr>
+                                                <td><%= ++count %></td>
+                                                <td><%= trashProjects[i].name %></td>
+                                                <td><%= trashProjects[i].status %></td>
+                                                <td><form method="post" action="/projects/restoreProjectFromTrash/<%= trashProjects[i]._id %>"><button type="submit" href="#" class="btn btn-success btn-sm">Restore</button></form></td>
+                                                <td><form method="post" action="/projects/deleteProject/<%= trashProjects[i]._id %>"><button type="submit" href="#" class="btn btn-danger btn-sm">Permanently Delete</button></form></td>
+                                            </tr>
+                                    <% } %>
+                            </table>
+                            <% } %>
+
+                            <% if (projects == 0) {  %>
+                                <p>There are no Projects!!</p>
+                                <% } else { %>
+                            <h3>Deleted Tasks</h3>
+                            <% for(var i=0; i< projects.length; i++ ) { %> <!-- start of projects loop -->
+                            <h3>Project: <%= projects[i].name %><h3><h4>Owner: @<%= projects[i].owner.username %></h4>
+                            <table class="table table-striped table-hover">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <% var count=0; %>
+                                    <% for ( var j=0; j< projects[i].tasks.length; j++) { %> <!-- start of tasks loop -->
+                                        <% if (projects[i].tasks[j].status == "deleted") { %>
+                                            <tr>
+                                                <td><%= ++count %></td>
+                                                <td><%= projects[i].tasks[j].title %></td>
+                                                <td><%= projects[i].tasks[j].status %></td>
+                                                <td><form method="post" action="/tasks/restoreTaskFromTrash/<%= projects[i]._id %>/<%= projects[i].tasks[j]._id %>"><button type="submit" href="#" class="btn btn-success btn-sm">Restore</button></form></td>
+                                                <td><form method="post" action="/tasks/removeTask/<%= projects[i]._id %>/<%= projects[i].tasks[j]._id %>"><button type="submit" href="#" class="btn btn-danger btn-sm">Permanently Delete</button></form></td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %> <!-- end of tasks loop -->
+                            </table>
+
+
+                                <% } %> <!-- end of projects loop -->
+
+                                <% } %>
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+
+                      </div>
+                    </div>
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

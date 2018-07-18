@@ -1,0 +1,61 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+	<div class="box">
+	    <header>
+		<h5>New Project</h5>
+	    </header>
+        <form class="form-horizontal" method="post" action="/projects/add">
+
+            <div class="form-group">
+                <label for="text1" class="control-label col-lg-4">Projct Name</label>
+
+                <div class="col-lg-8">
+                    <input type="text" id="projectName" name="projectName" maxlength="80" placeholder="Project Name" class="form-control">
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+                <label for="text4" class="control-label col-lg-4">Description</label>
+
+                <div class="col-lg-8">
+                    <textarea id="projectDescription" name="projectDescription" class="form-control" maxlength="240"></textarea>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+                <div class="col-lg-12">
+                  <a href="/dashboard" class="btn btn-primary">Back</a>
+                    <input class="btn btn-primary pull-right" type="submit" value="Create Project">
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+<hr>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

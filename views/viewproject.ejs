@@ -1,0 +1,156 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                            <div class="text-center">
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    Project View
+                                	<div class="box">
+                                	</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <p class="col-lg-12"><a href="/projects/addtask/<%= project.id%>" class="btn btn-primary">Add Task</a></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="box">
+                                  <% if (project.tasks) { %>
+                                    <% if (project.tasks == 0) { %>
+                                        <p><%= "there are no tasks!" %></p>
+                                    <% } else { %>
+                                        <!-- <p><%= "there are tasks!!!" %></p> -->
+                                        <% for (var i=0; i < project.tasks.length; i++) { %>
+                                            <div class="draggable col-lg-2">
+                                                <div class="box <%= project.tasks[i].priority %>TaskBox">
+                                                    <div class="body">
+                                                        Created By:
+                                                        <strong><a href="/users/view/<%= project.tasks[i].creator.username %>">@<%= project.tasks[i].creator.username %></a></strong>
+                                                    </div>
+                                                    <div class="body">
+                                                        Title:
+                                                        <strong><%= project.tasks[i].title %></strong>
+                                                    </div>
+                                                    <div class="body">
+                                                        Created:
+                                                        <%= project.tasks[i].created.date %> - <%= project.tasks[i].created.time %>
+                                                    </div>
+                                                    <div class="body">
+                                                        Priority:
+                                                        <span class="<%= project.tasks[i].priority %>" style="text-transform: capitalize;"><%= project.tasks[i].priority %></span>
+                                                    </div>
+                                                    <div class="body">
+                                                        Duration:
+                                                        <%= project.tasks[i].duration %>
+                                                    </div>
+                                                    <div class="body">
+                                                        For:
+                                                        <% if (project.tasks[i].users.length == 0 ) { %>
+                                                            <%= None %>
+                                                        <% } else { %>
+                                                                <% for (var k=0; k < project.tasks[i].users.length; k++) { %>
+                                                                    <a href="/users/view/<%= project.tasks[i].users[k].username %>">@<%= project.tasks[i].users[k].username %></a>
+                                                                <% } %>
+                                                            <% } %>
+                                                    </div>
+                                                    <div class="body">
+                                                        Task Type:
+                                                        <span style="text-transform: capitalize;"><%= project.tasks[i].type %></span>
+                                                    </div>
+                                                    <div class="body">
+                                                        Description:
+                                                        <%= project.tasks[i].description %>
+                                                    </div>
+                                                    <div class="body">
+                                                        Status:
+                                                        <span style="text-transform: capitalize;"><%= project.tasks[i].status %></span>
+                                                    </div>
+                                                    <div class="body text-right">
+                                                        <a href="#" class="btn btn-primary">Open</a>
+                                                        <a href="#" class="btn btn-primary">Join</a>
+                                                        <a href="#" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+                                                        <a href="#" class="btn btn-danger"><i class="fa fa-folder-open"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                    <% } %>
+                                  <% } %>
+                                </div>
+                            </div>
+<br>
+<br>
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+                    <div id="right" class="bg-light lter">
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Warning!</strong> Best check yo self, you're not looking too good.
+                        </div>
+                        <!-- .well well-small -->
+                        <div class="well well-small dark">
+                            <ul class="list-unstyled">
+                                <li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span></li>
+                                <li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span></li>
+                                <li>Popularity <span class="dynamicbar pull-right">Loading..</span></li>
+                                <li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span></li>
+                            </ul>
+                        </div>
+                        <!-- /.well well-small -->
+                        <!-- .well well-small -->
+                        <div class="well well-small dark">
+                            <button class="btn btn-block">Default</button>
+                            <button class="btn btn-primary btn-block">Primary</button>
+                            <button class="btn btn-info btn-block">Info</button>
+                            <button class="btn btn-success btn-block">Success</button>
+                            <button class="btn btn-danger btn-block">Danger</button>
+                            <button class="btn btn-warning btn-block">Warning</button>
+                            <button class="btn btn-inverse btn-block">Inverse</button>
+                            <button class="btn btn-metis-1 btn-block">btn-metis-1</button>
+                            <button class="btn btn-metis-2 btn-block">btn-metis-2</button>
+                            <button class="btn btn-metis-3 btn-block">btn-metis-3</button>
+                            <button class="btn btn-metis-4 btn-block">btn-metis-4</button>
+                            <button class="btn btn-metis-5 btn-block">btn-metis-5</button>
+                            <button class="btn btn-metis-6 btn-block">btn-metis-6</button>
+                        </div>
+                        <!-- /.well well-small -->
+                        <!-- .well well-small -->
+                        <div class="well well-small dark">
+                            <span>Default</span><span class="pull-right"><small>20%</small></span>
+
+                            <div class="progress xs">
+                                <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+                            </div>
+                            <span>Success</span><span class="pull-right"><small>40%</small></span>
+
+                            <div class="progress xs">
+                                <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+                            </div>
+                            <span>warning</span><span class="pull-right"><small>60%</small></span>
+
+                            <div class="progress xs">
+                                <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+                            </div>
+                            <span>Danger</span><span class="pull-right"><small>80%</small></span>
+
+                            <div class="progress xs">
+                                <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+                            </div>
+                        </div>                    </div>
+                    <!-- /#right -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

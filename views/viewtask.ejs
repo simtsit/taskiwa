@@ -1,0 +1,160 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                            <% include ../views/layouts/messages %>
+
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+    	<div class="box">
+    	    <header>
+                <h5>View Task</h5>
+    	    </header>
+
+            <div class="form-group">
+                <label for="taskTitle" class="control-label col-lg-4">Project</label>
+
+                <div class="col-lg-8">
+                    <input id="taskTitle" name="taskTitle" class="form-control" value="<%= task.project.name %>" disabled></input>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+
+              <div class="form-group">
+                  <label for="taskTitle" class="control-label col-lg-4">Title</label>
+
+                  <div class="col-lg-8">
+                      <input id="taskTitle" name="taskTitle" class="form-control" value="<%= task.title %>" disabled></input>
+                  </div>
+              </div>
+              <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label for="taskPriority" class="control-label col-lg-4">Priority</label>
+
+                    <div class="col-lg-8">
+                        <input id="taskPriority" name="taskPriority" class="form-control" value="<%= task.priority %>" disabled></input>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label for="taskOwner" class="control-label col-lg-4">Owner</label>
+
+                    <div class="col-lg-8">
+                        <input id="taskOwner" name="taskOwner" class="form-control" value="<%= task.owner.username %>" disabled></input>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+
+                <div class="form-group">
+                    <label for="taskCreated" class="control-label col-lg-4">Created</label>
+
+                    <div class="col-lg-4">
+                        <input id="taskCreatedDate" name="taskCreatedDate" class="form-control" value="<%= task.created.date %>" disabled></input>
+                    </div>
+                    <div class="col-lg-4">
+                        <input id="taskCreatedHour" name="taskCreatedHour" class="form-control" value="<%= task.created.time %>" disabled></input>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+
+                <div class="form-group">
+                    <label for="taskType" class="control-label col-lg-4">Type</label>
+
+                    <div class="col-lg-8">
+                        <input id="taskType" name="taskType" class="form-control" value="<%= task.type.name %>" disabled></input>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label for="taskUsers" class="control-label col-lg-4">Users</label>
+
+                    <div class="col-lg-8">
+                        <% if (task.users.length == 0){ %>
+                            <p>There are no users</p>
+                        <% } else { %>
+                            <% for (var i=0; i<task.users.length; i++) { %>
+                                <li><%= task.users[i].username %></li>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+
+                <div class="form-group">
+                    <label for="taskDescription" class="control-label col-lg-4">Description</label>
+
+                    <div class="col-lg-8">
+                        <textarea id="taskDescription" name="taskDescription" class="form-control" value="<%= task.description %>" disabled><%= task.description %></textarea>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+
+                <div class="form-group">
+                    <form method="post" action="/tasks/commentTask/<%= task._id %>">
+                        <div class="col-lg-6 col-lg-offset-4">
+                            <textarea id="taskComment" name="taskComment" class="form-control" value="<%= task.description %>"></textarea>
+                        </div>
+                        <div class="col-lg-2">
+                            <br>
+                            <button type="submit" href="#" class="btn btn-primary">Comment</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- /.form-group -->
+                <div class="form-group">
+                    <div class="col-lg-1 col-lg-offset-7" style="padding-top: 20px;">
+                        <a href="/projects/view/<%= task.project._id %>" class="btn btn-primary">Back</a>
+                        <br>
+                    </div>
+                    <div class="col-lg-1" style="padding-top: 20px;">
+                        <form method="post" action="/tasks/closeTask/<%= task._id %>"><button type="submit" href="#" class="btn btn-warning">Close</button></form>
+                        <br>
+                    </div>
+                    <div class="col-lg-1" style="padding-top: 20px;">
+                        <form method="post" action="/tasks/moveTaskToTrash/<%= task._id %>"><button type="submit" href="#" class="btn btn-danger">Delete</button></form>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Comments</h3>
+            <br>
+            <% if(task.comments.length == 0) { %>
+                <p>There are no Comments</p>
+            <% } else { %>
+                <% for (var i=0; i<task.comments.length; i++) { %>
+                    <p>User @<%= task.comments[i].user.username %> at <%= task.comments[i].created.date %>, <%= task.comments[i].created.time %> wrote:</p>
+                    <p><%= task.comments[i].body %>
+                    <hr>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

@@ -1,0 +1,118 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+
+
+<div class="row">
+        <div class="col-lg-12">
+            <table id="dataTable" class="table table-bordered table-condensed table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Day / Hour</th>
+                    <th>Description</th>
+                    <!-- <th>Parent</th>
+                    <th colspan=2>Action</th>
+                    <th>Description</th> -->
+                </tr>
+                <% for (var logEntriesCount = 0; logEntriesCount < logEntries.length; logEntriesCount++) { %>
+
+                    <tr class="<%= logEntries[logEntriesCount].action.category %>">
+                        <td width="50"><%= logEntriesCount+1 %></td>
+                        <td width="140"><%= logEntries[logEntriesCount].created.date %>, <%= logEntries[logEntriesCount].created.time %></td>
+                        <td>
+                            User <a href="/users/view/<%= logEntries[logEntriesCount].owner._id %>">@<%= logEntries[logEntriesCount].owner.username %></a>
+
+                            <% if (logEntries[logEntriesCount].action.category == "Project") { %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Create") { %>
+                                    created Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a></td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Edit") { %>
+                                    edited Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a> -> <%= logEntries[logEntriesCount].description %></td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Delete") { %>
+                                    moved Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a> to <a href="/trash">trash bin</a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Restore") { %>
+                                    restored Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a> from <a href="/trash">trash bin</a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "User Add") { %>
+                                    added User <a href="/users/view/<%= logEntries[logEntriesCount].user._id %>">@<%= logEntries[logEntriesCount].user.username %></a> to Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "User Remove") { %>
+                                    removed User <a href="/users/view/<%= logEntries[logEntriesCount].user._id %>">@<%= logEntries[logEntriesCount].user.username %></a> from Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Type Create") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Type Remove") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Type Edit") { %>
+                                    edited Task Type in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a> -> <%= logEntries[logEntriesCount].description %></td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Group Create") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Group Delete") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Group Edit") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                                <% if(logEntries[logEntriesCount].action.method == "Task Group Task") { %>
+                                     <%= logEntries[logEntriesCount].description %> in Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a>.</td>
+                                <% } %>
+
+                            <% } %>
+
+                            <% if (logEntries[logEntriesCount].action.category == "User") { if(logEntries[logEntriesCount].action.method == "Registration") { %>
+                                registered.</td>
+                            <% } } %>
+
+
+                            <% if (logEntries[logEntriesCount].action.category == "Task") { if(logEntries[logEntriesCount].action.method == "Create") { %>
+                                created Task <a href="/tasks/view/<%= logEntries[logEntriesCount].project._id %>/<%= logEntries[logEntriesCount].task._id %>"><%= logEntries[logEntriesCount].task.title %></a> at Project <a href="/projects/view/<%= logEntries[logEntriesCount].project._id %>"><%= logEntries[logEntriesCount].project.name %></a></td>
+                            <% } } %>
+
+
+
+
+
+
+
+
+
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+</div>
+<hr>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

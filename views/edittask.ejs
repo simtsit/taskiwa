@@ -1,0 +1,162 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                          <% include ../views/layouts/messages %>
+
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+    	<div class="box">
+    	    <header>
+    		<h5>Edit Task</h5>
+    	    </header>
+
+          <form class="form-horizontal" method="post" action="/tasks/editTaskTitle/<%= project._id %>/<%= task._id %>">
+              <div class="form-group">
+                  <label for="taskTitle" class="control-label col-lg-4">Title</label>
+                  <div class="col-lg-6">
+                      <input id="taskTitle" name="taskTitle" class="form-control" value="<%= task.title %>"></input>
+                  </div>
+                  <div class="col-lg-2">
+                      <button href="#" class="btn btn-primary btn-sm">Change</button>
+                  </div>
+              </div>
+            </form>
+              <!-- /.form-group -->
+
+              <form class="form-horizontal" method="post" action="/tasks/editTaskPriority/<%= project._id %>/<%= task._id %>">
+                <div class="form-group">
+                    <label for="taskPriority" class="control-label col-lg-4">Priority</label>
+                    <div class="col-lg-2">
+                        <select id="taskPriority" name="taskPriority" class="form-control">
+                            <option value="normal" <% if (task.priority=="normal") { %><%= 'selected="selected"' %> <% } %>>Normal</option>
+                            <option value="high" <% if (task.priority=="high"){ %><%= 'selected="selected"' %> <% } %>>High</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <button href="#" class="btn btn-primary btn-sm">Change</button>
+                    </div>
+                </div>
+              </form>
+                <!-- /.form-group -->
+
+              <form class="form-horizontal" method="post" action="/tasks/editTaskType/<%= project._id %>/<%= task._id %>">
+                <div class="form-group">
+                    <label for="taskType" class="control-label col-lg-4">Type</label>
+
+                    <div class="col-lg-3">
+                        <select id="taskType" name="taskType" class="form-control">
+                          <% for (var i=0; i < tasktypes.length; i++) { %>}
+                            <option value="<%= tasktypes[i].name %>"><%= tasktypes[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <button href="#" class="btn btn-primary btn-sm">Change</button>
+                    </div>
+                </div>
+              </form>
+                <!-- /.form-group -->
+
+
+            <form class="form-horizontal" method="post" action="/tasks/editTaskDescription/<%= project._id %>/<%= task._id %>">
+                <div class="form-group">
+                    <label for="taskDescription" class="control-label col-lg-4">Description</label>
+
+                    <div class="col-lg-6">
+                        <textarea id="taskDescription" name="taskDescription" class="form-control"><%= task.description %></textarea>
+                    </div>
+                    <div class="col-lg-2">
+                      <br>
+                      <button href="#" class="btn btn-primary btn-sm">Change</button>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <a href="/projects/view/<%= project._id %>" class="btn btn-primary"> Back</a>
+                            <form method="post" action="/tasks/moveTaskToTrash/<%= project._id %>/<%= task._id %>"><button type="submit" href="/projects/view/<%= project._id %>" class="btn btn-danger">Delete</button></form>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-6">
+                <strong>Task Connections / Links</strong>
+                <% if (task.connections == 0) { %>
+                    <p><%= "There are no task connections." %></p>
+                    <% } else { %>
+                      <ul class="list-group">
+                        <% for(var i=0; i < task.connections.length; i++) { %>
+                          <form method="post" action="/tasks/removeTaskConnection/<%= project._id %>/<%= task._id %>/<%= task.connections[i].to %>"><li class="list-group-item"><%= task.connections[i].to %><span style="padding-left: 20px;"><button type="submit" href="#" class="btn btn-danger btn-sm">X</button></span></li></form>
+                        <% } %>
+                      </ul>
+                    <% } %>
+                  <form method="post" action="/tasks/addTaskConnection/<%= project._id %>/<%= task._id %>">
+                      <div class="form-group">
+                          <div class="col-lg-10">
+                              <select id="taskToConnect" name="taskToConnect" class="form-control">
+                                  <% for(var i=0; i < project.tasks.length; i++) { %>
+                                  <option value="<%= project.tasks[i]._id %>"><%= project.tasks[i].title %></option>
+                                  <% } %>
+                              </select>
+                          </div>
+                          <div class="col-lg-2">
+                              <button type="submit" href="#" class="btn btn-primary">Connect</button>
+                          </div>
+                      </div>
+                  </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <br>
+                <strong>Users in this Task </strong>
+                <% if (task.users == 0) { %>
+                    <p><%= "There are no users connected." %></p>
+                    <% } else { %>
+                      <ul class="list-group">
+                        <% for(var i=0; i < task.users.length; i++) { %>
+                          <form method="post" action="/tasks/removeUser/<%= project._id %>/<%= task._id %>/<%= task.users[i]._id %>"><li class="list-group-item"><%= task.users[i].username %><span style="padding-left: 20px;"><button type="submit" href="#" class="btn btn-danger btn-sm">X</button></span></li></form>
+                        <% } %>
+                      </ul>
+                    <% } %>
+                  <form method="post" action="/tasks/addUser/<%= project._id %>/<%= task._id %>">
+                      <div class="form-group">
+                          <div class="col-lg-10">
+                              <select id="userToAdd" name="userToAdd" class="form-control">
+                                  <option value="<%= project.owner._id %>"><%= project.owner.username %></option>
+                                  <% for(var i=0; i < project.users.length; i++) { %>
+                                  <option value="<%= project.users[i]._id %>"><%= project.users[i].username %></option>
+                                  <% } %>
+                              </select>
+                          </div>
+                          <div class="col-lg-2">
+                              <button type="submit" href="#" class="btn btn-primary">Add</button>
+                          </div>
+                      </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

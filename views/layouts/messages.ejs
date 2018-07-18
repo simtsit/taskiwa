@@ -1,0 +1,9 @@
+<% if (success_msg != "") { %>
+    <p class="text-center bg-success"><%= success_msg %></p>
+    <% } %>
+<% if (error_msg != "") { %>
+    <p class="text-center bg-danger"><%= error_msg %></p>
+<% } %>
+<% if (error != "") { %>
+    <p class="text-center bg-warning"><%= error %></p>
+<% } %>

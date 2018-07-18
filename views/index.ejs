@@ -1,0 +1,22 @@
+<% include ../views/layouts/header %>
+
+<center>
+<h2>Welcome to Taskiwa</h2>
+  <Br>
+  <p>The new (and free) online task manager<p>
+  <br>
+  <a href="users/login" class="btn btn-primary">Login</a>
+  <a href="/users/register" class="btn btn-primary">Register</a>
+  <br>
+  <br>
+  <%= userCount %> users, owning <%= projectCount %> projects, dealing totally <%= taskCount %> tasks!
+  <br>
+  <br>
+  <br>
+  <br>
+  <%= nowDate %> - <%= nowHour %>
+  <br>
+  <a href="#" class="link">Terms & Conditions </a>
+</center>
+
+<% include ../views/layouts/footer %>

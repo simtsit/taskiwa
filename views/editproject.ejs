@@ -1,0 +1,239 @@
+<% include ../views/layouts/header %>
+<% include ../views/layouts/menu %>
+
+
+                    </div>
+                    <!-- /#left -->
+                <div id="content">
+                    <div class="outer">
+                        <div class="inner bg-light lter">
+                          <% include ../views/layouts/messages %>
+<hr>
+
+<div class="row">
+    <div class="col-lg-4">
+
+            <div class="form-group">
+                <label class="control-label col-lg-3">Crated:</label>
+                <div class="col-lg-9">
+                    <input class="form-control" name="projectCreated" value="<%= project.created.date %> <%= project.created.time %>" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-3">Owner:</label>
+                <div class="col-lg-9">
+                    <input class="form-control" name="projectOwner" value="<%= project.owner.username %>" disabled>
+                </div>
+            </div>
+
+            <form method="post" action="/projects/editProjectName/<%= project.id %>">
+                <div class="form-group">
+                    <label for="projectName" class="control-label col-lg-3">Name:</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" type="text" name="projectName" maxlength="80"value="<%= project.name %>">
+                    </div>
+                    <div class="col-lg-3">
+                        <button type="submit" href="#" class="btn btn-primary">Change</button>
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" action="/projects/editProjectDescription/<%= project.id %>">
+                <div class="form-group">
+                    <label for="projectDescription" class="control-label col-lg-3">Description:</label>
+                    <div class="col-lg-6">
+                        <textarea class="form-control" name="projectDescription" maxlength="140"><%= project.description %></textarea>
+                    </div>
+                    <div class="col-lg-3">
+                        <br>
+                        <button type="submit" href="#" class="btn btn-primary">Change</button>
+                    </div>
+                </div>
+            </form>
+
+        </form>
+        <div class="col-lg-4">
+            <a href="/dashboard" class="btn btn-primary">Back</a>
+        </div>
+  </div>
+
+    <div class="col-lg-4">
+            <strong>Project users</strong>
+            <% if (project.users == 0) { %>
+                <p><%= "There are no users connected to this project." %></p>
+                <% } else { %>
+                  <ul class="list-group">
+                    <% for(var i=0; i < project.users.length; i++) { %>
+                      <form method="post" action="/projects/removeUser/<%= project.id %>/<%= project.users[i]._id %>">
+                          <li class="list-group-item"><%= project.users[i].username %><span style="padding-left: 20px;">
+                              <button type="submit" href="#" class="btn btn-danger">X</button></span></li>
+                      </form>
+                    <% } %>
+                  </ul>
+                <% } %>
+          <form method="post" class="form-horizontal" action="/projects/addUser/<%= project.id %>">
+              <div class="form-group">
+                  <div class="col-lg-8">
+                      <input type="email" class="form-control" name="userEmail" placeholder="User's email...">
+                  </div>
+                  <div class="col-lg-4">
+                        <!-- <button type="submit" href="#" class="btn btn-primary">Add User</button> -->
+                        <input class="btn btn-primary" type="submit" value="Add User">
+            	    </div>
+              </div>
+          </form>
+    </div>
+
+
+    <!-- ColorWheel -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/qunit/1.14.0/qunit.min.js" type="text/javascript"></script>
+    <script src="/colorwheel/colorwheel.js" type="text/javascript"></script>
+
+
+      <script type='text/javascript'>
+    function run_tests(){
+
+      function input_example(){
+        var cw = Raphael.colorwheel($("#test .colorwheel")[0],150);
+        cw.input($("#test input")[0]);
+        return cw;
+      }
+
+      function callback_example(){
+        var cw = Raphael.colorwheel($("#test .colorwheel")[0],150);
+        cw.input($("#test input")[0]);
+        return cw;
+      }
+
+      module("Color Wheel");
+
+      var input = $("#test input");
+      var cw = input_example();
+
+      test("setting the color value updates the picker and the input", function(){
+        cw.color("#FF0000");
+        equal("#ff0000", cw.color().hex, "the color value is set");
+        equal("#ff0000", input.val(), "input is set");
+      });
+
+      module("Callback");
+
+      test("onchange should happen when user interaction happens", function(){
+      var onchange_count = 0;
+      cw.onchange(function(){	onchange_count += 1; });
+      equal(onchange_count, 0, "onchange has not triggered yet");
+      input.val("#FFFFFF").trigger("keyup");
+      equal(onchange_count, 1, "onchange should trigger when input changed");
+      });
+
+    }
+
+    $(run_tests);
+    </script>
+
+
+
+
+    <div class="col-lg-4">
+            <strong>Task Types</strong>
+            <% if (project.tasktypes == 0) { %>
+                <p><%= "There are no Task Types in this project." %></p>
+                <% } else { %>
+                    <% for(var i=0; i < project.tasktypes.length; i++) { %>
+                      <div class="row">
+                        <form method="post" action="/projects/editTaskTypeName/<%=project._id %>/<%= project.tasktypes[i]._id %>">
+                            <div class="col-lg-4">
+                                <input class="form-control" name="actualTaskTypeName" id="actualTaskTypeName" value="<%= project.tasktypes[i].name %>">
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" href="#" class="btn btn-primary btn-sm">Save</button>
+                            </div>
+                          </form>
+                          <form method="post" action="/projects/editTaskTypeColor/<%=project._id %>/<%= project.tasktypes[i]._id %>">
+                              <div class="col-lg-3">
+                                  <input size="13" name="actualTaskTypeColor" id="actualTaskTypeColor" style="background-color: <%= project.tasktypes[i].color %>;" value="<%= project.tasktypes[i].color %>">
+                              </div>
+                              <div class="col-lg-3">
+                                <button type="submit" href="#" class="btn btn-primary btn-sm">Save</button>
+                          </form>
+                            <form method="post" action="/projects/removeTaskType/<%=project._id %>/<%= project.tasktypes[i]._id %>"><button type="submit" href="# " class="btn btn-danger btn-sm">Delete</button></form>
+                        </div>
+                      </div>
+                    <% } %>
+                <% } %>
+          <form method="post" action="/projects/addTaskType/<%= project.id %>">
+
+              <div class="form-group">
+                <div class="col-lg-5">
+                    <input class="form-control" name="taskTypeName" placeholder="Task Type name...">
+                </div>
+                <div class="col-lg-4">
+                    <div id='test'>
+                      <input class="form-control" id='test' type='text' name="taskTypeColor" placeholder="Color..." />
+                      <div class='colorwheel'/></div>
+                    </div>
+                  </div>
+                <div class="col-lg-3">
+                      <button type="submit" href="#" class="btn btn-primary">Add Task Type</button>
+          	      </div>
+              </div>
+          </form>
+    </div>
+
+    <div class="col-lg-5">
+        <strong>Task Groups</strong>
+        <div class="form-group">
+            <form method="post" class="form-horizontal" action="/projects/addTaskGroup/<%= project.id %>">
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        <input class="form-control" name="taskGroupName" placeholder="Group's Name...">
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- <button type="submit" href="#" class="btn btn-primary">Add User</button> -->
+                        <input class="btn btn-primary" type="submit" value="Create Group">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="form-group">
+        <% if (project.taskgroups == 0) { %>
+            <p><%= "There are no task groups in this project." %></p>
+            <% } else { %>
+                <br>
+                <strong>Existing Task Groups</strong>
+                <br>
+              <div class="col-lg-6">
+                <% for(var i=0; i < project.taskgroups.length; i++) { %>
+                    <form method="post" action="/projects/removeTaskGroup/<%= project.id %>/<%= project.taskgroups[i]._id %>">
+                        <li class="list-group-item"><%= project.taskgroups[i].name %>
+                            <span style="padding-left: 20px;">
+                                <a href="/taskgroups/edit/<%= project._id %>/<%= project.taskgroups[i]._id %>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                                <button type="submit" href="#" class="btn btn-danger btn-sm">X</button>
+                            </span>
+                        </li>
+                    </form>
+                <% } %>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+
+                        </div>
+                        <!-- /.inner -->
+                    </div>
+                    <!-- /.outer -->
+                </div>
+                <!-- /#content -->
+
+            </div>
+            <!-- /#wrap -->
+<% include ../views/layouts/footer %>

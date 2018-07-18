@@ -1,0 +1,39 @@
+.media-body {
+  width: auto;
+}
+
+a.navbar-brand {
+    margin-top: -10px;
+    padding-left: 9px !important;
+}
+
+.low {color: green;}
+.medium {color: brown;}
+.high {color: orange;}
+.critical {color: red;}
+
+.lowTaskBox {border: 2px solid green; border-radius: 4px;}
+.mediumTaskBox {border: 2px solid brown; border-radius: 4px;}
+.highTaskBox {border: 2px solid orange; border-radius: 4px;}
+.criticalTaskBox {border: 2px solid red; border-radius: 4px;}
+
+
+
+.outer {
+  /*width: 85%;*/
+}
+
+input {
+  background: #666666;
+}
+
+
+.User { background-color: #dff0d8 }
+.Project { background-color: #fcf8e3 }
+.Task { background-color: #f2dede }
+.Other { background-color: #d9edf7 }
+
+
+input:invalid {
+    border: 1px solid red;
+}
