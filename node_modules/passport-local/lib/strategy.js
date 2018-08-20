@@ -71,9 +71,9 @@ Strategy.prototype.authenticate = function(req, options) {
   var username = lookup(req.body, this._usernameField) || lookup(req.query, this._usernameField);
   var password = lookup(req.body, this._passwordField) || lookup(req.query, this._passwordField);
   
-  if (!username || !password) {
-    return this.fail({ message: options.badRequestMessage || 'Missing credentials' }, 400);
-  }
+  // if (!username || !password) {
+  //   return this.fail({ message: options.badRequestMessage || 'Missing credentials' }, 400);
+  // }
   
   var self = this;
   

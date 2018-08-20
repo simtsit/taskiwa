@@ -72,6 +72,15 @@ router.post('/register',
 	var password2 = req.body.password2;
 	var preview = "defaultUserPreview.png";
 
+	// var nameFirst = "Simos";
+	// var nameLast = "Tsitoglou";
+	// var email = "simostsitoglou@taskiwa.com";
+	// var username = simostsitoglou;
+	// var password = "1";
+	// var password2 = "1";
+	// var preview = "defaultUserPreview.png";
+
+
 	// Validation
 	req.checkBody('nameFirst', 'First Name is required').notEmpty();
 	req.checkBody('nameLast', 'Last Name is required').notEmpty();
@@ -150,6 +159,8 @@ router.post('/register',
 passport.use(new LocalStrategy(
   function(email, password, done) {
 	  var emailLowerCase = email.toLowerCase();
+	  emailLowerCase.toString();
+	  // var emailLowerCase = email;
 
    User.getUserByEmail(emailLowerCase, function(err, user){
    	if(err) throw err;
