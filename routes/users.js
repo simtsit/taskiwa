@@ -158,11 +158,11 @@ router.post('/register',
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
-	  var emailLowerCase = email.toLowerCase();
-	  emailLowerCase.toString();
-	  // var emailLowerCase = email;
+	  // var emailLowerCase = email.toLowerCase();
+	  // emailLowerCase.toString();
+	  // // var emailLowerCase = email;
 
-   User.getUserByEmail(emailLowerCase, function(err, user){
+   User.getUserByEmail(email, function(err, user){
    	if(err) throw err;
    	if(!user){
    		return done(null, false, {message: 'Unknown User'});
